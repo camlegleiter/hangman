@@ -9,6 +9,7 @@ Commands:
 ```bash
 # Install and run
 $ yarn
+$ yarn migrate
 $ yarn start
 
 # Run tests
