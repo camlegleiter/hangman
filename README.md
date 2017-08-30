@@ -12,10 +12,14 @@ $ yarn
 $ yarn migrate
 $ yarn start
 
-# Run tests
-# Tests should be run with `NODE_ENV=test` for test database configuration
+# Run (all) tests
+# Note: test targets must be run with `NODE_ENV=test` for test database configuration to be applied. The yarn targets below already set this before running so it shouldn't need to be set manually.
 $ yarn test
+
+# Run unit tests only
 $ yarn test:unit
+
+# Run HTTP tests only
 $ yarn test:http
 
 # View code coverage
@@ -26,6 +30,43 @@ $ yarn lint
 ```
 
 ## Hangman API
+
+### Game Server Status
+Note: This API is useful for health-check processes, as it is lightweight and includes details about the server's status that can provide additional context of the current server health.
+
+Most of the returned values from the `/status` endpoint are calculated using the [Node OS](https://nodejs.org/api/os.html) module. Additional documentation can be found there.
+
+#### Request
+```
+GET /status
+```
+
+#### Response
+```
+HTTP 1/1 200 OK
+Content-Type: application/json
+{
+  "freemem": number,
+  "freemempercent": number,
+  "instanceId": "uuid",
+  "loadavg": [number, number, number],
+  "totalmem": number,
+  "usedmem": number,
+  "uptime": number
+}
+```
+where:
+* `freemem` is the total amount of free system memory, in bytes.
+* `freemempercent` is the percentage of free memory available. This is calculated using: `(freemem / totalmem) * 100)`.
+* `instanceId` is the server's unique "identifier". When the server is running, this value will not change between polls of the `/status` API. When the server is restarted, this value will be updated. This can be useful to help determine if a server was restarted in between health checks, or in general.
+* `loadavg` is an array with three values of CPU load for the last 1, 5 and 15 minutes.
+* `totalmem` is the total amount of system memory, in bytes.
+* `usedmem` is the total amount of used system memory, in bytes.
+* `uptime` is the total time in seconds the system (running the server) has been up.
+
+##### Response Status Codes
+200 OK - The response is successful
+5XX - The server is unavailable
 
 ### List Games
 #### Request
@@ -90,7 +131,8 @@ where:
 * `state` is the current game state, and is represented by one of three values:
   * `started`: The game is in progress and the client can make guesses for the word,
   * `won`: The game is over and the client successfully guessed the game word,
-  * `lost`: The game is over and the client failed to guess the game word,
+  * `lost`: The game is over and the client failed to guess the game word.
+* `word` is the game's word. The `word` is randomly selected from a [dictionary](./src/lib/dictionary.txt) of common English words containing letters from the English alphabet. No phrases or spaces are used. This value is not intended for display in a view (or what would be the purpose of guessing?), and may be removed in future versions of the API.
 * `createdOn` is a date indicating when the game was created. This value is not intended for display in a view.
 * `updatedOn` is a date indicating the last time when the game was modified, mainly as the client makes successful or failed guesses. This value is not intended for display in a view.
 
@@ -121,9 +163,10 @@ Content-Type: application/json
 }
 ```
 where the response contains a new game object. New games have the following in common:
-* `lettersGuessed` is an empty string,
-* `lettersMatched` is an empty string,
+* `lettersGuessed` is an empty string.
+* `lettersMatched` is an empty string.
 * `remainingGuesses` is the number **6**, as this is typically the number of guesses it takes before the Hangman character is completely drawn, indicating a failed game.
+* `state` is set to "started" to indicate the game is in progress.
 
 See the [Get Game API](#get-game) for details on the fields included in each game object.
 
