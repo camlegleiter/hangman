@@ -17,7 +17,7 @@ $ yarn start
 $ yarn test
 
 # Run unit tests only
-$ yarn test:unit
+$ yarn test:spec
 
 # Run HTTP tests only
 $ yarn test:http
