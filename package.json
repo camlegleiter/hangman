@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "git@github.com:camlegleiter/hangman.git",
   "author": "Cameron Legleiter <camlegleiter@gmail.com>",
-  "license": "The Unlicense",
+  "license": "MIT",
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint src/ test/",
