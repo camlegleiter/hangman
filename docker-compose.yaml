@@ -1,0 +1,30 @@
+version: '2'
+services:
+  hangman:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    command: npm run start
+    volumes:
+      - .:/usr/src/app/
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - hangman-db
+      - hangman-test-db
+    environment:
+      DATABASE_URL: postgres://hangmanager:password@hangman-db/hangman
+      TEST_DATABASE_URL: postgres://hangmanager:password@hangman-test-db/hangman
+  hangman-db:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER: hangmanager
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hangman
+  hangman-test-db:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER: hangmanager
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hangman
