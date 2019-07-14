@@ -8,25 +8,25 @@ This is an Express-based Hangman game.
 Commands:
 ```bash
 # Install and run
-$ yarn
-$ yarn migrate
-$ yarn start
+$ npm install
+$ npm run migrate
+$ npm run start
 
 # Run (all) tests
 # Note: test targets must be run with `NODE_ENV=test` for test database configuration to be applied. The yarn targets below already set this before running so it shouldn't need to be set manually.
-$ yarn test
+$ npm test
 
 # Run unit tests only
-$ yarn test:spec
+$ npm run test:spec
 
 # Run HTTP tests only
-$ yarn test:http
+$ npm run test:http
 
 # View code coverage
-$ yarn test:coverage
+$ npm run test:coverage
 
 # Lint code
-$ yarn lint
+$ npm run lint
 ```
 
 ## Hangman API
