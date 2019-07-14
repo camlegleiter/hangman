@@ -13,9 +13,7 @@ describe('services/gameService', () => {
 
     gameService = createGameService({ knex });
 
-    return knex.migrate.rollback()
-      .then(() => knex.migrate.latest()
-      .then(() => knex.seed.run()));
+    return knex.migrate.rollback().then(() => knex.migrate.latest()).then(() => knex.seed.run());
   });
 
   afterEach(() => knex.migrate.rollback());

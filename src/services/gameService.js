@@ -34,8 +34,7 @@ export default function createGameService({ knex }) {
           lettersMatched: Array(wordLength).fill('_').join(''),
           remainingGuesses: 6,
           state: GAME_STATE.STARTED,
-        })
-        .then(() => service.getGameById({ id }));
+        }, '*');
       });
     },
 

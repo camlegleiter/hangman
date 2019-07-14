@@ -13,9 +13,7 @@ describe('/api/v1/games', () => {
 
     requestAgent = request(app);
 
-    return knex.migrate.rollback()
-      .then(() => knex.migrate.latest()
-      .then(() => knex.seed.run()));
+    return knex.migrate.rollback().then(() => knex.migrate.latest()).then(() => knex.seed.run());
   });
 
   afterEach(() => knex.migrate.rollback());
