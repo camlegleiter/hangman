@@ -1,11 +1,6 @@
 module.exports = {
   knex: {
-    client: 'sqlite3',
-    connection: {
-      charset: 'utf8',
-      database: 'gamesdb',
-      filename: ':memory:',
-    },
+    connection: process.env.TEST_DATABASE_URL,
   },
   env: 'test',
   logger: {
