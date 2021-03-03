@@ -36,7 +36,7 @@
     "morgan": "^1.8.0",
     "noop": "^0.2.2",
     "pg": "^6.1.2",
-    "pug": "^2.0.0-beta11",
+    "pug": "^3.0.1",
     "rotating-file-stream": "^1.1.7",
     "standard-http-error": "^2.0.0",
     "uuid": "^3.0.1"
